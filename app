@@ -2,6 +2,7 @@
 const zipCode = document.getElementById ('zip');
 const generate = document.getElementById ('generate');
 const feelings = document.getElementById ('feelings');
+const place = document.getElementById ('location');
 const date = document.getElementById('date');
 const temp = document.getElementById('temp');
 const content = document.getElementById('content');
@@ -15,19 +16,20 @@ const content = document.getElementById('content');
 //Retrive Weather Data from Openweather API
 
 const getWeatherData = async (Zipcode) => {
-  const response = await fetch (baseURL + Zipcode + ',US' +'&appid='+apiKey+'&units=metric')
+  const response = await fetch (baseURL+Zipcode+',US'+'&appid='+apiKey+'&units=metric')
   try {
     const data = await response.json();
     return data;
   }
   catch (error) {console.log ("error",error);}
+  console.log (response)
 
 } 
 
 //Async Post
 
 const postData = async (url ='', data = {}) => {
-  const res = await fetch (url ='http://localhost:3000', {
+  const res = await fetch (url ='http://localhost:3000/add', {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
@@ -37,34 +39,43 @@ const postData = async (url ='', data = {}) => {
     body: JSON.stringify(data),
   })
   try {
-    const newData = await response.json();
+    const newData = await res.json();
     return newData;
   }
   catch (error) {console.log ("error",error);}
   }
+
+
+//Async Get
+
+
+
+
+
 
 // Post data
 generate.addEventListener ('click', addZipCode)
 async function addZipCode (e) {
 
   if(zip.value != "" && feelings.value != ""){
-    let currentDate = new Date().toDateString() + " " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    let currentDate = getnewDate();//new Date().toDateString();
     let data = await getWeatherData(zipCode.value);
     let tempValue = Math.round(data.main.temp);
-    let locationValue = data.name + ", " + data.sys.country;
-    let weatherValue = data.weather[0].main + ", feels like " + Math.round(data.main.feels_like);
-    let contentValue = document.getElementById('feelings').value;
-    postData('/', {
+    let locationValue = data.name + ", " + data.sys.country ;
+    let weatherValue = data.weather[0].main +' '+ Math.round(data.main.feels_like);
+    let contentValue = document.getElementById ('feelings').value
+    
+    postData('/add', {
         date: currentDate,
         location: locationValue,
         temp: tempValue,
         weather: weatherValue,
         content: contentValue
     })
-    .then (
-      updateUI()
-      )
+    .then (UI())
+    .then (cleanUI());
 }
+
 else 
 {
   if (zip.value == "" && feelings.value == "") 
@@ -85,26 +96,31 @@ else
 }
 
 }
-
-
-//UI update
-
-const updateUI = async () => {
-  const req = await fetch('/');
-  try{
-      const allData = await req.json();
-      const location = document.getElementById('location');
-      const weather = document.getElementById('weather');
-      date.innerHTML = allData[allData.length - 1].date;
-      location.innerHTML = allData[allData.length - 1].location;
-      temp.innerHTML = "<i class='fas fa-snowflake'></i>" + allData[allData.length - 1].temp + '&deg;C' + "<i class='fas fa-temperature-low'></i>";
-      weather.innerHTML = "<i class='fas fa-cloud'></i>" + allData[allData.length - 1].weather + '&deg;C';
-      content.innerHTML = "I feel " + allData[allData.length - 1].content;
-      console.log (allData)
-    }catch(error){
-
-      console.log('error', error);
-
-  }
-  console.log (req.body);
+/* Function to GET Project Data */
+const UI = async () => {
+  const updateData = await fetch ('/add'); // жди прихода от апи
+    const allData = await updateData.json();
+    try{
+   
+    temp.innerHTML = allData[allData.length - 1].temp + '°';
+    content.innerHTML = 'And today I feel '+ allData[allData.length - 1].content;
+    place.innerHTML = allData[allData.length - 1].location;
+    date.innerHTML = getnewDate();//allData[allData.length - 1].date;
+    }
+    catch (error) {console.log ('error', error)}
 }
+function cleanUI(){
+  zipCode.value = "";
+  feelings.value= "";
+}
+
+const getnewDate = () => {
+let fullDate = new Date(); 
+let data = fullDate.getDate();
+let year = fullDate.getFullYear();
+let month = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'August', 'Sep', 'Oct', 'Nov', 'Dec']
+return (month[fullDate.getMonth()]+' ' + data + ', '+ year);
+console.log (month[fullDate.getMonth()]+' ' + data + ', '+ year)
+}
+
+getnewDate();
