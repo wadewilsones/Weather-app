@@ -1,3 +1,4 @@
+
 //add an API endpoint
 let projectData = {};
 // create variable with name express,whic require express pack. To run server and routes.
@@ -7,10 +8,8 @@ const app = express();
 //deprendencies
 const bodyParser = require('body-parser');
 //Here we are configuring express to use body-parser as middle-ware.
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 // cors for cross origin allowance
 const cors = require('cors');
 app.use(cors());
@@ -29,16 +28,16 @@ function listening() {
 
 //GET request
 
-app.get('/', getWeather)
+app.get('/add', getWeather)
 function getWeather(req, res) {
     let projectData = data; 
-    console.log (projectData); // print data in server//
-   res.send (projectData); // respond reflected on server smt like that//
+    console.log ('Getting', projectData); 
+   res.send (projectData); 
 }
 
 //POST request
 const data = [];
-app.post('/', addWeather)
+app.post('/add', addWeather);
 function addWeather(req, res) {
     const weatherData = { // Object, info will get from Open map//
         date: req.body.date,
@@ -49,5 +48,6 @@ function addWeather(req, res) {
     }
 data.push (weatherData) // Add new info about weather to server//
 let projectData = data; 
-console.log (projectData); 
+res.send(projectData);
+console.log ('Returning', projectData);// print data in server//
 }
