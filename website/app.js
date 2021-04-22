@@ -11,7 +11,7 @@ const content = document.getElementById('content');
 
 // Base URL for OpenWeatherMap API
   const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-  const apiKey = 'f160bf0abe9fe5dde87e073cda69e092';
+  const apiKey = '***********************';
 
 //Retrive Weather Data from Openweather API
 
