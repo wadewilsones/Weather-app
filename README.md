@@ -14,7 +14,12 @@ Use the command
 
 ## Step 2
 
-Register [here](https://home.openweathermap.org/users/sign_up) and use your own API-key.
+Register [here](https://home.openweathermap.org/users/sign_up) and use your own API-key in the ```app.js:```
+```
+  Base URL for OpenWeatherMap API
+  const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
+  const apiKey = '***********************';
+```
 
 ## Step 3
 
