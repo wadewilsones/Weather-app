@@ -7,12 +7,14 @@ This project is a weather app. Working on based OpenWeatherMap API and forecast 
 Clone the repository or downolad zip-file with the code. After that use a terminal and switch to the file directory. 
 
 ## Step 1
-Use the command ```npm instal```
+Use the command 
+
+```npm instal```
 
 
 ## Step 2
 
-Register [here](https://home.openweathermap.org/users/sign_up) and use your own API-key
+Register [here](https://home.openweathermap.org/users/sign_up) and use your own API-key.
 
 ## Step 3
 
