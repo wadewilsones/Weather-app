@@ -10,4 +10,4 @@ Clone the repository or downolad zip-file with the code. After that use a termin
 Use the command ```npm instal```
 
 
-##Register [here] (https://home.openweathermap.org/users/sign_up)
+##Register [here](https://home.openweathermap.org/users/sign_up)
