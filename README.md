@@ -20,6 +20,7 @@ Register [here](https://home.openweathermap.org/users/sign_up) and use your own 
   const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip=';
   const apiKey = '***********************';
 ```
+Instead of *** - type your API.
 
 ## Step 3
 
