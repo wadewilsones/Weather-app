@@ -24,5 +24,5 @@ Instead of *** - type your API.
 
 ## Step 3
 
-Run the server, using:
+Run the server using:
 ``` node server.js ```
